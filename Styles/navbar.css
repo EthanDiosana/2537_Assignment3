@@ -1,14 +1,33 @@
+/* nav bar styling. */
+
 #navBar {
-    border: 1px solid black;
+    font-size: 1em;
+    padding: 10px;  
     display: flex;
-    justify-content: space-around;
+    background-color: white;
+    border: 1px solid black;
 }
 
 #navBar div {
+    margin-left: 10px;
+    padding: 10px;
     border: 1px solid black;
-    
+    border-radius: 5px;
 }
 
-#navBar :hover {
-    text-decoration: underline;
+/* A cool hover styling. */
+#navBar div:hover {
+    margin-left: 10px;
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: rgb(214, 214, 214);
+}
+
+#postsContainer {
+    overflow-y: scroll;
+    border: 1px solid black;
+    border-radius: 5pt;
+    height: 80vh;
+    margin: 10pt;
 }
