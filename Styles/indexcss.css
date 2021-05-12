@@ -5,11 +5,13 @@
 #mainDiv {
     display: grid;
     grid-template-rows: 0.5fr 10fr;
+    grid-template-columns: 1fr;
     height: 100vh;
 }
 
 #secondaryDiv {
     color: white;
     background-color: rgb(27, 43, 58);
+    grid-row-start: 2;
 }
 
