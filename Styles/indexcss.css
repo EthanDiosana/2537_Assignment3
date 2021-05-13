@@ -13,5 +13,14 @@
     color: white;
     background-color: rgb(27, 43, 58);
     grid-row-start: 2;
+    display: grid;
+    padding: 50px;
+}
+
+#tertiaryDiv {
+    background-color: white;
+    border-radius: 5px;
+    border: 2px solid black;
+    overflow-y: scroll;
 }
 
