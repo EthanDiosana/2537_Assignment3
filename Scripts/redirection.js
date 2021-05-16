@@ -15,7 +15,6 @@ $(document).ready(function () {
         password: $('#passwordInput').val()
       },
       success: function (data) {
-        console.log('Data returned from server', data);
         if (data.status == "success") {
           // do the redirect
           window.location.replace('/profile');

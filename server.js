@@ -59,6 +59,8 @@ async function initializeDB() {
 app.get('/', (req, res) => {
   let doc = fs.readFileSync(__dirname + '/login.html', 'utf-8');
   initializeDB();
+  res.set('Server', 'Zamboni Engine');
+  res.set('X-Powered-By', 'Zamboni');
   res.send(doc);
 });
 
