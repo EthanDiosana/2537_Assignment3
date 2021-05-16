@@ -21,6 +21,32 @@ app.use(session(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 
+// USING MYSQL2 ASYNC TO CREATE DATABASE
+async function initializeDB() {
+
+  const mysql = require('mysql2/promise');
+  const connection = await mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    multipleStatements: true
+  });
+
+  const createDBAndTables = `CREATE DATABASE IF NOT EXISTS test;
+    use test;
+    CREATE TABLE IF NOT EXISTS user (
+      ID int NOT NULL AUTO_INCREMENT,
+      username varchar(30),
+      password varchar(30),
+      PRIMARY KEY (ID);
+    )`;
+
+  await connection.query(createDBAndTables);
+  let results = await connection.query("SELECT COUNT(*) FROM user");
+  console.log(results);
+  connection.end();
+}
+
 //GET REQUESTS
 
 /* GET login.html */
