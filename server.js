@@ -71,6 +71,23 @@ server.listen(8000, () => {
 function authenticate(user, pwd, callback) {
   const mysql = require('mysql2');
   const connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'test'
+  });
+
+  connection.query("SELECT * FROM user WHERE email = ? AND password = ?", [user, pwd], function (error, results) {
+    if (error) {
+      throw error;
+    }
+
+    if (results.length > 0) {
+      // username and password are found
+      return callback(results[0]);
+    } else {
+      return callback(null);
+    }
 
   })
 }
