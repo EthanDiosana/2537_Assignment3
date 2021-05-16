@@ -64,7 +64,16 @@ app.get('/', (req, res) => {
 
 /* GET index.html */
 app.get('/profile', (req, res) => {
-  res.sendFile(__dirname + '/profile.html');
+
+  // check for a session
+  if (req.session.loggedIn) {
+    let profileDoc = fs.readFileSync(__dirname + '/profile.html', 'utf-8');
+    res.send(profileDoc);
+  } else {
+    // with out a session, not logged in
+    res.redirect('/');
+  }
+
 });
 
 
@@ -111,7 +120,7 @@ function authenticate(user, pwd, callback) {
     database: 'test'
   });
 
-  connection.query("SELECT * FROM user WHERE email = ? AND password = ?", [user, pwd], function (error, results) {
+  connection.query("SELECT * FROM user WHERE username = ? AND password = ?", [user, pwd], function (error, results) {
     if (error) {
       throw error;
     }
