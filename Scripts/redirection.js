@@ -18,7 +18,7 @@ $(document).ready(function () {
         console.log('Data returned from server', data);
         if (data.status == "success") {
           // do the redirect
-          window.location.replace('/getIndex');
+          window.location.replace('/profile');
         } else {
           // display an error message
           console.error(data['msg']);

@@ -63,8 +63,8 @@ app.get('/', (req, res) => {
 });
 
 /* GET index.html */
-app.get('/getIndex', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
+app.get('/profile', (req, res) => {
+  res.sendFile(__dirname + '/profile.html');
 });
 
 
