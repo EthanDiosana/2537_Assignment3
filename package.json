@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/EthanDiosana/2537_Assignment3/issues"
   },
-  "homepage": "https://github.com/EthanDiosana/2537_Assignment3#readme"
+  "homepage": "https://github.com/EthanDiosana/2537_Assignment3#readme",
+  "dependencies": {
+    "express-session": "^1.17.1"
+  }
 }
