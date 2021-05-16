@@ -1,5 +1,7 @@
 const express = require('express');
 const session = require('express-session');
+const fs = require("fs");
+const { JSDOM } = require('jsdom');
 const app = express();
 const http = require('http');
 const path = require('path');
@@ -38,12 +40,16 @@ async function initializeDB() {
       ID int NOT NULL AUTO_INCREMENT,
       username varchar(30),
       password varchar(30),
-      PRIMARY KEY (ID);
-    )`;
+      PRIMARY KEY (ID)
+    );`;
 
   await connection.query(createDBAndTables);
   let results = await connection.query("SELECT COUNT(*) FROM user");
-  console.log(results);
+  let count = results[0][0]['COUNT(*)'];
+  if (count < 1) {
+    results = await connection.query("INSERT INTO user (username, password) VALUES ('arron_ferguson@bcit.ca', 'admin')");
+    console.log('Added one user record');
+  }
   connection.end();
 }
 
@@ -51,7 +57,9 @@ async function initializeDB() {
 
 /* GET login.html */
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/login.html');
+  let doc = fs.readFileSync(__dirname + '/login.html', 'utf-8');
+  initializeDB();
+  res.send(doc);
 });
 
 /* GET index.html */
