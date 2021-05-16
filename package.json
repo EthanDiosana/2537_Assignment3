@@ -1,0 +1,24 @@
+{
+  "name": "2537_assignment3",
+  "version": "1.0.0",
+  "description": "student assignment",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EthanDiosana/2537_Assignment3.git"
+  },
+  "keywords": [
+    "templating",
+    "sessions"
+  ],
+  "author": "Team 22",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EthanDiosana/2537_Assignment3/issues"
+  },
+  "homepage": "https://github.com/EthanDiosana/2537_Assignment3#readme"
+}

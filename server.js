@@ -21,6 +21,14 @@ app.get('/getIndex', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
 
+// POST trying to sign into a profile
+app.post('/authorize', (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+
+  console.log("Username: ", req.body.username);
+  console.log("Password: ", req.body.password);
+})
+
 // SERVER LISTENING
 server.listen(8000, () => {
   console.log('listening on localhost:8000');
