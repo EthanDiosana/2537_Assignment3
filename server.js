@@ -53,6 +53,25 @@ async function initializeDB() {
   connection.end();
 }
 
+async function initializeStudentsDB() {
+  const mysql = require('mysql2/promise');
+  const connection = await mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    multipleStatements: true
+  });
+
+  const createDBAndTables = `CREATE DATABASE IF NOT EXISTS test;
+    use test;
+    CREATE TABLE IF NOT EXISTS user (
+      ID int NOT NULL AUTO_INCREMENT,
+      username varchar(30),
+      password varchar(30),
+      PRIMARY KEY (ID)
+    );`;
+}
+
 //GET REQUESTS
 
 /* GET login.html */
