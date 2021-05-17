@@ -5,6 +5,7 @@ const { JSDOM } = require('jsdom');
 const app = express();
 const http = require('http');
 const path = require('path');
+const { connect } = require('http2');
 const server = http.createServer(app);
 
 //SERVING STATIC FILES (SCRIPT, CSS)
@@ -47,7 +48,7 @@ async function initializeDB() {
   let results = await connection.query("SELECT COUNT(*) FROM user");
   let count = results[0][0]['COUNT(*)'];
   if (count < 1) {
-    results = await connection.query("INSERT INTO user (username, password) VALUES ('arron_ferguson@bcit.ca', 'admin')");
+    results = await connection.query("INSERT INTO user (username, password) VALUES ('a', 'aa');");
     console.log('Added one user record');
   }
   connection.end();
@@ -62,14 +63,38 @@ async function initializeStudentsDB() {
     multipleStatements: true
   });
 
-  const createDBAndTables = `CREATE DATABASE IF NOT EXISTS test;
+  const createDBAndSchema = `CREATE DATABASE IF NOT EXISTS test;
     use test;
-    CREATE TABLE IF NOT EXISTS user (
+    CREATE TABLE IF NOT EXISTS students (
       ID int NOT NULL AUTO_INCREMENT,
-      username varchar(30),
-      password varchar(30),
+      firstName varchar(30),
+      lastName varchar(30),
+      studentID varchar(9),
       PRIMARY KEY (ID)
     );`;
+  await connection.query(createDBAndSchema);
+  let results = await connection.query("SELECT COUNT(*) FROM students");
+  let numberOfStudents = results[0][0]['COUNT(*)'];
+  if (numberOfStudents < 1) {
+    results = await connection.query("INSERT INTO students (firstName, lastName, studentID) VALUES ('John', 'Braithwaite', 'A01206633');");
+    console.log('added Johns data');
+  }
+  connection.end();
+
+}
+
+function retrieveStudents() {
+  const mysql = require('mysql2/promise');
+  const connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    multipleStatements: true
+  });
+  connection.query('use test;');
+  let results = connection.query('SELECT * FROM students;');
+  connection.end();
+  return results;
 }
 
 //GET REQUESTS
@@ -85,16 +110,23 @@ app.get('/', (req, res) => {
 
 /* GET index.html */
 app.get('/profile', (req, res) => {
-
+  initializeStudentsDB();
   // check for a session
   if (req.session.loggedIn) {
-    let profileDoc = fs.readFileSync(__dirname + '/profile.html', 'utf-8');
     let templateFile = fs.readFileSync(__dirname + '/Templates/profile_template.html', 'utf-8');
     let templateDOM = new JSDOM(templateFile);
     let $template = require('jquery')(templateDOM.window);
 
     // put username into profile page
     $template('#usernameDisplay').html(req.session.username);
+
+    // query database for student info
+    let results = retrieveStudents();
+
+
+    console.log(results);
+
+
     res.send(templateDOM.serialize());
   } else {
     // with out a session, not logged in
