@@ -70,7 +70,13 @@ app.get('/profile', (req, res) => {
   // check for a session
   if (req.session.loggedIn) {
     let profileDoc = fs.readFileSync(__dirname + '/profile.html', 'utf-8');
-    res.send(profileDoc);
+    let templateFile = fs.readFileSync(__dirname + '/Templates/profile_template.html', 'utf-8');
+    let templateDOM = new JSDOM(templateFile);
+    let $template = require('jquery')(templateDOM.window);
+
+    // put username into profile page
+    $template('#usernameDisplay').html(req.session.username);
+    res.send(templateDOM.serialize());
   } else {
     // with out a session, not logged in
     res.redirect('/');
