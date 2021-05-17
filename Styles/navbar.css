@@ -32,3 +32,7 @@
     height: 80vh;
     margin: 10pt;
 }
+
+#logOutButton {
+    user-select: none;
+}

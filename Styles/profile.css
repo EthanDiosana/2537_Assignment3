@@ -21,8 +21,18 @@
 #tertiaryDiv {
     background-color: white;
     grid-row: 2 / span 9;
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
     border-radius: 5px;
     border: 2px solid black;
     overflow-y: scroll;
 }
 
+.profile_text>h2 {
+    margin: 5pt;
+}
+
+.profile_text>p {
+    margin: 5pt;
+    margin-bottom: 15pt;
+}

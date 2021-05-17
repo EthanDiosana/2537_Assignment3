@@ -1,3 +1,5 @@
+'use strict';
+
 /* For redirecting from login.html to index.html. */
 $(document).ready(function () {
 

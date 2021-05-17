@@ -1,3 +1,5 @@
+'use strict';
+
 const express = require('express');
 const session = require('express-session');
 const fs = require("fs");
@@ -48,7 +50,7 @@ async function initializeDB() {
   let results = await connection.query("SELECT COUNT(*) FROM user");
   let count = results[0][0]['COUNT(*)'];
   if (count < 1) {
-    results = await connection.query("INSERT INTO user (username, password) VALUES ('a', 'aa');");
+    results = await connection.query("INSERT INTO user (username, password) VALUES ('arron_ferguson@bcit.ca', 'admin');");
     console.log('Added one user record');
   }
   connection.end();
@@ -83,16 +85,16 @@ async function initializeStudentsDB() {
 
 }
 
-function retrieveStudents() {
-  const mysql = require('mysql2/promise');
-  const connection = mysql.createConnection({
+async function retrieveStudents() {
+  const mysql = await require('mysql2/promise');
+  const connection = await mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '',
     multipleStatements: true
   });
-  connection.query('use test;');
-  let results = connection.query('SELECT * FROM students;');
+  await connection.query('use test;');
+  let results = await connection.query('SELECT * FROM students;');
   connection.end();
   return results;
 }
@@ -108,6 +110,18 @@ app.get('/', (req, res) => {
   res.send(doc);
 });
 
+app.get('/sign_out', (req, res) => {
+  req.session.destroy();
+  res.send(200);
+})
+
+var phrases = [
+  "Amazing!",
+  "NEW!",
+  "2000+",
+  "No Artificial Flavour!"
+];
+
 /* GET index.html */
 app.get('/profile', (req, res) => {
   initializeStudentsDB();
@@ -119,6 +133,11 @@ app.get('/profile', (req, res) => {
 
     // put username into profile page
     $template('#usernameDisplay').html(req.session.username);
+    $template('#tertiaryDiv').html(fs.readFileSync('./Templates/ethan.html')
+      + fs.readFileSync('./Templates/liam.html')
+      + fs.readFileSync('./Templates/john.html')
+      + fs.readFileSync('./Templates/trevor.html'));
+    $template("")
 
     // query database for student info
     let results = retrieveStudents();
