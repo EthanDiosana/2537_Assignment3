@@ -1,5 +1,12 @@
 'use strict';
 
+/*
+Liam Arabsky      A01229067 larabsky1@my.bcit.ca
+Trevor Hong       A01232148
+Ethan Diosana     A01248983
+John Braithwaite  A01206633
+*/
+
 const express = require('express');
 const session = require('express-session');
 const fs = require("fs");
@@ -114,13 +121,6 @@ app.get('/sign_out', (req, res) => {
   req.session.destroy();
   res.send(200);
 })
-
-var phrases = [
-  "Amazing!",
-  "NEW!",
-  "2000+",
-  "No Artificial Flavour!"
-];
 
 /* GET index.html */
 app.get('/profile', (req, res) => {
